@@ -1943,6 +1943,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["items"],
@@ -54196,6 +54197,10 @@ var render = function() {
                     }),
                     1
                   )
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.items || !_vm.items.length
+                ? _c("h2", [_vm._v("Ешқандай тауар жоқ")])
                 : _vm._e()
             ],
             1

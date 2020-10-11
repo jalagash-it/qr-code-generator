@@ -28,6 +28,7 @@
             </b-col>
           </b-row>
         </b-container>
+        <h2 v-if="!items||!items.length">Ешқандай тауар жоқ</h2>
       </b-list-group-item>
     </b-list-group>
   </div>
