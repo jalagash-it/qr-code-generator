@@ -12,8 +12,14 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
+Route::get('/migrate/fresh',function(){
+    Artisan::call('migrate:fresh --seed');
+    return 'OK';
+});
+Route::get('/storage/link',function(){
+    Artisan::call('storage:link');
+    return 'OK';
+});
 Auth::routes();
 
 Route::get('/get-all-products',function(){
