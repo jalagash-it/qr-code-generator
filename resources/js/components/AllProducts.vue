@@ -2,7 +2,7 @@
   <div>
     <b-list-group horizontal>
       <b-list-group-item style="width: 100%">
-        <b-container>
+        <b-container v-if="items">
           <b-row v-for="item in items" :key="item.id">
             <b-col>
               <b-card-group>
@@ -35,6 +35,7 @@
 <script>
 import fileService from "../services/file-service";
 export default {
+  props: ["items"],
   data() {
     return {
       fields: [
@@ -43,15 +44,9 @@ export default {
         { key: "file_path", label: "Суреті" },
         { key: "qrcode_path", label: "qr code" },
       ],
-
-      items: [],
     };
   },
-  mounted() {
-    fileService.getAllProducts().then((res) => {
-      this.items = res.data;
-    });
-  },
+
   methods: {
     removeProduct(item) {
       let confirmed = confirm(`${item.name} өше берсін бе?`);
@@ -60,6 +55,7 @@ export default {
         .removeProduct(item.id)
         .then(() => {
           alert("Өшірілді");
+          this.items.splice(this.items.indexOf(item),1);
         })
         .catch(() => {
           alert("Қате!!!");

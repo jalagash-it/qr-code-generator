@@ -1945,6 +1945,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["items"],
   data: function data() {
     return {
       fields: [{
@@ -1959,60 +1960,23 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         key: "qrcode_path",
         label: "qr code"
-      }],
-      items: []
+      }]
     };
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    _services_file_service__WEBPACK_IMPORTED_MODULE_0__["default"].getAllProducts().then(function (res) {
-      _this.items = res.data;
-    });
   },
   methods: {
     removeProduct: function removeProduct(item) {
+      var _this = this;
+
       var confirmed = confirm("".concat(item.name, " \u04E9\u0448\u0435 \u0431\u0435\u0440\u0441\u0456\u043D \u0431\u0435?"));
       if (!confirmed) return;
       _services_file_service__WEBPACK_IMPORTED_MODULE_0__["default"].removeProduct(item.id).then(function () {
         alert("Өшірілді");
+
+        _this.items.splice(_this.items.indexOf(item), 1);
       })["catch"](function () {
         alert("Қате!!!");
       });
     }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
   }
 });
 
@@ -2126,16 +2090,28 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      items: [],
       file1: null,
       productName: ""
     };
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    _services_file_service__WEBPACK_IMPORTED_MODULE_1__["default"].getAllProducts().then(function (res) {
+      _this.items = res.data;
+    });
+  },
   methods: {
     onSubmit: function onSubmit() {
+      var _this2 = this;
+
       window.fi = this.$refs.fileInput;
       var f = this.$refs.fileInput.files;
-      _services_file_service__WEBPACK_IMPORTED_MODULE_1__["default"].sendFile(f, this.productName).then(function () {
+      _services_file_service__WEBPACK_IMPORTED_MODULE_1__["default"].sendFile(f, this.productName).then(function (res) {
         alert("сақталды");
+
+        _this2.items.push(res.data);
       })["catch"](function () {
         alert("қате");
       });
@@ -54114,109 +54090,113 @@ var render = function() {
             "b-list-group-item",
             { staticStyle: { width: "100%" } },
             [
-              _c(
-                "b-container",
-                _vm._l(_vm.items, function(item) {
-                  return _c(
-                    "b-row",
-                    { key: item.id },
-                    [
-                      _c(
-                        "b-col",
+              _vm.items
+                ? _c(
+                    "b-container",
+                    _vm._l(_vm.items, function(item) {
+                      return _c(
+                        "b-row",
+                        { key: item.id },
                         [
                           _c(
-                            "b-card-group",
+                            "b-col",
                             [
-                              _c("b-card", {
-                                attrs: {
-                                  "img-src": item.file_path,
-                                  "bg-variant": "light",
-                                  "img-top": ""
-                                },
-                                scopedSlots: _vm._u(
-                                  [
-                                    {
-                                      key: "footer",
-                                      fn: function() {
-                                        return [
-                                          _vm._v(
-                                            " Aтауы:" + _vm._s(item.name) + " "
-                                          )
-                                        ]
-                                      },
-                                      proxy: true
-                                    }
-                                  ],
-                                  null,
-                                  true
-                                )
-                              }),
-                              _vm._v(" "),
-                              _c("b-card", {
-                                attrs: {
-                                  "img-src": item.qrcode_path,
-                                  "img-top": "",
-                                  "bg-variant": "light"
-                                },
-                                scopedSlots: _vm._u(
-                                  [
-                                    {
-                                      key: "footer",
-                                      fn: function() {
-                                        return [
-                                          _c(
-                                            "b-link",
-                                            {
-                                              attrs: {
-                                                href: item.qrcode_path,
-                                                download: ""
-                                              }
-                                            },
-                                            [
+                              _c(
+                                "b-card-group",
+                                [
+                                  _c("b-card", {
+                                    attrs: {
+                                      "img-src": item.file_path,
+                                      "bg-variant": "light",
+                                      "img-top": ""
+                                    },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "footer",
+                                          fn: function() {
+                                            return [
                                               _vm._v(
-                                                "\n                    QR CODE жүктеп алу\n                  "
+                                                " Aтауы:" +
+                                                  _vm._s(item.name) +
+                                                  " "
                                               )
                                             ]
-                                          )
-                                        ]
-                                      },
-                                      proxy: true
+                                          },
+                                          proxy: true
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
+                                  }),
+                                  _vm._v(" "),
+                                  _c("b-card", {
+                                    attrs: {
+                                      "img-src": item.qrcode_path,
+                                      "img-top": "",
+                                      "bg-variant": "light"
+                                    },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "footer",
+                                          fn: function() {
+                                            return [
+                                              _c(
+                                                "b-link",
+                                                {
+                                                  attrs: {
+                                                    href: item.qrcode_path,
+                                                    download: ""
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                    QR CODE жүктеп алу\n                  "
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          },
+                                          proxy: true
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "b-button",
+                                {
+                                  staticClass: "margin-bottom-15",
+                                  attrs: { variant: "danger", block: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.removeProduct(item)
                                     }
-                                  ],
-                                  null,
-                                  true
-                                )
-                              })
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n              тауарды өшіру\n            "
+                                  )
+                                ]
+                              )
                             ],
                             1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "b-button",
-                            {
-                              staticClass: "margin-bottom-15",
-                              attrs: { variant: "danger", block: "" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.removeProduct(item)
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n              тауарды өшіру\n            "
-                              )
-                            ]
                           )
                         ],
                         1
                       )
-                    ],
+                    }),
                     1
                   )
-                }),
-                1
-              )
+                : _vm._e()
             ],
             1
           )
@@ -54228,53 +54208,6 @@ var render = function() {
   )
 }
 var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
-  \*******************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
 render._withStripped = true
 
 
@@ -54481,7 +54414,7 @@ var render = function() {
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
-      _c("AllProducts")
+      _vm.items ? _c("AllProducts", { attrs: { items: _vm.items } }) : _vm._e()
     ],
     1
   )
@@ -69721,7 +69654,6 @@ module.exports = g;
 
 var map = {
 	"./components/AllProducts.vue": "./resources/js/components/AllProducts.vue",
-	"./components/ExampleComponent.vue": "./resources/js/components/ExampleComponent.vue",
 	"./views/App.vue": "./resources/js/views/App.vue",
 	"./views/Home.vue": "./resources/js/views/Home.vue",
 	"./views/Login.vue": "./resources/js/views/Login.vue"
@@ -69882,75 +69814,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProducts_vue_vue_type_template_id_26e5de8a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProducts_vue_vue_type_template_id_26e5de8a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/ExampleComponent.vue":
-/*!******************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
-/* harmony import */ var _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/ExampleComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ExampleComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
-  \*************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

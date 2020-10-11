@@ -19,7 +19,7 @@
       <b-button variant="primary" @click="onSubmit">Сақтау</b-button>
     </b-form>
     <hr />
-    <AllProducts />
+    <AllProducts :items="items" v-if="items" />
   </div>
 </template>
 <script>
@@ -29,9 +29,15 @@ export default {
   components: { AllProducts },
   data() {
     return {
+      items: [],
       file1: null,
       productName: "",
     };
+  },
+  mounted() {
+    fileService.getAllProducts().then((res) => {
+      this.items = res.data;
+    });
   },
   methods: {
     onSubmit() {
@@ -39,8 +45,9 @@ export default {
       let f = this.$refs.fileInput.files;
       fileService
         .sendFile(f, this.productName)
-        .then(() => {
+        .then((res) => {
           alert("сақталды");
+          this.items.push(res.data);
         })
         .catch(() => {
           alert("қате");
